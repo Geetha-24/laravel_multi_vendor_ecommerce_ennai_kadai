@@ -41,11 +41,9 @@ class PasswordResetLinkController extends Controller
                 $notification->createUrlUsing(function ($user, $token) {
                     return route('admin.password.reset',['token'=>$token,'email'=>$user->email]);
                 });
-
                 $user->notify($notification);
             }
         );
-
         return $status == Password::RESET_LINK_SENT
                     ? back()->with('status', __($status))
                     : back()->withInput($request->only('email'))
